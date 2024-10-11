@@ -6,22 +6,20 @@ import re
 from creds.py import api
 
 # URL for the request
-url = 'https://api.inxmail.com/hagengrote/rest/v1/mailings'
+url = f"https://api.inxmail.com/{api['CUSTOMER']}/rest/v1/mailings"
 headers = {'Accept': 'application/hal+json'}
-stat_url = 'https://api.inxmail.com/hagengrote/rest/v1/statistics/'
+stat_url = f"https://api.inxmail.com/{api['CUSTOMER']}/rest/v1/statistics/"
 
 # Your API credentials
 client_id = api["API_KEY"]
 secret = api["API_SECRET"]
-words = [ 'Rezeptheft_NL','Blitzangebot','Rezept_NL','Thema_NL','Angebot_NL','Thema', 'Angebot', 'Unsere_Besten']
-pattern = rf"({'|'.join(words)})_(.*?)_"
+listID = api["LIST_ID"]
+pattern = rf"({'|'.join(api["WORDS"])})_(.*?)_"
 
-
-listID = ['528','529','7','11','12','10','522','523','524','525','526']
 data = []
 
 
-for id in listID:
+for id in :
     params = {
         'listIds': id,
         'afterId': 720000,
