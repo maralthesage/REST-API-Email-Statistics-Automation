@@ -5,7 +5,7 @@ import pandas as pd
 import re
 from creds.py import api
 
-# URL for the request
+
 url = api["URL"]
 stat_url = api["STAT_URL"]
 client_id = api["API_KEY"]
