@@ -6,18 +6,17 @@ import re
 from creds.py import api
 
 # URL for the request
-url = f"https://api.inxmail.com/{api['CUSTOMER']}/rest/v1/mailings"
-headers = {'Accept': 'application/hal+json'}
-stat_url = f"https://api.inxmail.com/{api['CUSTOMER']}/rest/v1/statistics/"
-
-# Your API credentials
+url = api["URL"]
+stat_url = api["STAT_URL"]
 client_id = api["API_KEY"]
 secret = api["API_SECRET"]
 listID = api["LIST_ID"]
-pattern = rf"({'|'.join(api["WORDS"])})_(.*?)_"
+words = api["WORDS"]
+
+pattern = rf"({'|'.join(words)})_(.*?)_"
+headers = {'Accept': 'application/hal+json'}
 
 data = []
-
 
 for id in :
     params = {
