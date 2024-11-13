@@ -3,7 +3,7 @@ from requests.auth import HTTPBasicAuth
 import json
 import pandas as pd
 import re
-from creds.py import api
+from creds import api
 
 
 url = api["URL"]
@@ -18,7 +18,7 @@ headers = {'Accept': 'application/hal+json'}
 
 data = []
 
-for id in :
+for id in listID:
     params = {
         'listIds': id,
         'afterId': 720000,
@@ -30,7 +30,7 @@ for id in :
 
     # Check the response
     if response.status_code == 200:
-        mailing = response.json()['_embedded']['inx:mailings'][-7:]
+        mailing = response.json()['_embedded']['inx:mailings'][-28:]
         mailingIds = {}
         names = []
         
@@ -101,12 +101,12 @@ for id in :
             # Catch-all for any other exceptions (like API issues)
             print(f"An error occurred: {e}. Skipping this item.")
 
-
+# Concatenating all tables into one
 dd = pd.DataFrame()
 for item in data:
     dd = pd.concat([dd,item])
 
-
+# Renaming some items to the needed KWs
 dd['Typ'] = dd['Typ'].replace('Blitzangebot','Sonder NL')
 dd['Typ'] = dd['Typ'].replace('Thema_NL','Thema')
 dd['Typ'] = dd['Typ'].replace('Angebot_NL','Angebot')
@@ -114,16 +114,17 @@ dd['Typ'] = dd['Typ'].replace('Unsere_Besten','Unsere Besten')
 dd['Typ'] = dd['Typ'].replace('Rezeptheft_NL','Rezeptheft')
 dd['Typ'] = dd['Typ'].replace('Rezept_NL','Rezept')
 
-
-dd[dd['ListId']=='7'].to_excel('Stats/AU_NL.xlsx',index=False)
-dd[dd['ListId']=='10'].to_excel('Stats/FR_NL.xlsx',index=False)
-dd[dd['ListId']=='11'].to_excel('Stats/CH_DE_NL.xlsx',index=False)
-dd[dd['ListId']=='12'].to_excel('Stats/CH_FR_NL.xlsx',index=False)
-dd[dd['ListId']=='528'].to_excel('Stats/HG_NL.xlsx',index=False)
-dd[dd['ListId']=='529'].to_excel('Stats/JG_NL.xlsx',index=False)
-dd[dd['ListId']=='526'].to_excel('Stats/RZ_FR_NL.xlsx',index=False)
-dd[dd['ListId']=='525'].to_excel('Stats/RZ_CHFR_NL.xlsx',index=False)
-dd[dd['ListId']=='524'].to_excel('Stats/RZ_CHDE_NL.xlsx',index=False)
-dd[dd['ListId']=='523'].to_excel('Stats/RZ_AU_NL.xlsx',index=False)
-dd[dd['ListId']=='522'].to_excel('Stats/RZ_DE_NL.xlsx',index=False)
+# Writing each NL Analytics to a separate file
+folder = '/Volumes/Bilddaten/Grafik_allgemein/E-Commerce/Dominik/'
+dd[dd['ListId']=='7'].to_excel(f'{folder}Stats/AU_NL.xlsx',index=False)
+dd[dd['ListId']=='10'].to_excel(f'{folder}Stats/FR_NL.xlsx',index=False)
+dd[dd['ListId']=='11'].to_excel(f'{folder}Stats/CH_DE_NL.xlsx',index=False)
+dd[dd['ListId']=='12'].to_excel(f'{folder}Stats/CH_FR_NL.xlsx',index=False)
+dd[dd['ListId']=='528'].to_excel(f'{folder}Stats/HG_NL.xlsx',index=False)
+dd[dd['ListId']=='529'].to_excel(f'{folder}Stats/JG_NL.xlsx',index=False)
+dd[dd['ListId']=='526'].to_excel(f'{folder}Stats/RZ_FR_NL.xlsx',index=False)
+dd[dd['ListId']=='525'].to_excel(f'{folder}Stats/RZ_CHFR_NL.xlsx',index=False)
+dd[dd['ListId']=='524'].to_excel(f'{folder}Stats/RZ_CHDE_NL.xlsx',index=False)
+dd[dd['ListId']=='523'].to_excel(f'{folder}Stats/RZ_AU_NL.xlsx',index=False)
+dd[dd['ListId']=='522'].to_excel(f'{folder}Stats/RZ_DE_NL.xlsx',index=False)
     
